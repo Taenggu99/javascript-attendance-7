@@ -19,17 +19,18 @@ class App {
           `오늘은 ${getToday[0]}월 ${getToday[1]}일 ${getToday[3]}입니다. \n기능을 선택해 주세요.\n1. 출석 확인\n2. 출석 수정\n3. 크루별 출석 기록 확인\n4. 제적 위험자 확인\nQ. 종료\n`
         );
         this.checkCategory(category);
-        if (category === "Q") {
+        if (category === "Q" || category === "q") {
           isRunning = false;
           continue;
         }
         await this.selectCategoryFunction(category, getToday);
       } catch (error) {
         Console.print(error.message);
+        isRunning = false;
       }
   }
   checkCategory(category) {
-    const allowedCategories = ["1", "2", "3", "4", "Q"]; // 허용된 값 리스트
+    const allowedCategories = ["1", "2", "3", "4", "Q", "q"]; // 허용된 값 리스트
 
     if (!allowedCategories.includes(category)) {
       throw new Error("[ERROR] 잘못된 형식을 입력하였습니다.");

@@ -1,4 +1,4 @@
-import { Random, Console } from "@woowacourse/mission-utils";
+import { Random, Console, DateTimes } from "@woowacourse/mission-utils";
 import moduleName from "module";
 import Today from "../utils/Today.js";
 
@@ -7,7 +7,7 @@ import Today from "../utils/Today.js";
 class TimeTable {
   // 4. 교육시간 : 월요일은 13:00~18:00, 화요일-금요일은 10:00~18:00
   static checkTardiness() {
-    const todayDayInfo = Today.findToday();
+    const todayDayInfo = DateTimes.now();
     const month = todayDayInfo[0];
     const date = todayDayInfo[1];
     const day = todayDayInfo[2];
@@ -17,7 +17,6 @@ class TimeTable {
     // 주말(토=6, 일=0)이거나 기준 시간이 설정되지 않은 경우
     if (day === 0 || day === 6) {
       console.log(`${month}월 ${date}일 ${dayText}은 등교일이 아닙니다`);
-      return "Not applicable";
     } else {
       return [month, date, day, dayText, time];
     }

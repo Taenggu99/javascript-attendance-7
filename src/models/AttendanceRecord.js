@@ -1,14 +1,43 @@
-import { Random, Console } from "@woowacourse/mission-utils";
+import { Random, Console, DateTimes } from "@woowacourse/mission-utils";
 import DataLoader from "../utils/DataLoader.js";
 //이름,날짜,시간
 
 class AttendanceRecord {
-  static async get_user_name() {}
-  static attendanceCheck() {
+  static splitTableOfUsers(userName) {
     const data = DataLoader.loadAttendanceCsv("public/attendances.csv");
-    // Console.print(data);
+    const usersFullRecord = Object.groupBy(data, ({ nickname }) => nickname);
+    const userFullRecord = usersFullRecord[userName];
+    const userTimeRecord = userFullRecord.map(
+      (UserRecord) => UserRecord.datetime
+    );
+
+    return userTimeRecord;
   }
 
+  static spliteTableOfUser(userTimeRecord) {
+    const changeUserTimeRecord = [];
+    for (let i = 0; i < userTimeRecord.length; i++) {
+      const [fullDate, time] = userTimeRecord[i].split(" ");
+      const [year, month, date] = fullDate.split("-");
+      changeUserTimeRecord.push(`${month}월 ${date}일 000일 ${time}`);
+    }
+    return changeUserTimeRecord;
+  }
+
+  static async getUser_AttendanceRecord_Information() {
+    // const takeUserdata = this.splitTableOfUser();
+
+    // Console.print(takeUserdata);
+    const userName = await Console.readLineAsync("\n닉네임을 입력해 주세요\n");
+
+    const userTimeRecord = this.splitTableOfUsers(userName);
+    Console.print(`이번 달 ${userName}의 출석 기록입니다.`);
+    Console.print(userTimeRecord.length);
+    const outputUserTime = this.spliteTableOfUser(userTimeRecord);
+    Console.print(outputUserTime);
+    // const showResult = findFullday(year, date, time);
+    // Console.print(showResult);
+  }
   //   닉네임을 입력해 주세요.
   // 빙티
 

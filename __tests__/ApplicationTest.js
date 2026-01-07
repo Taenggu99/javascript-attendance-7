@@ -98,7 +98,7 @@ describe("테스트", () => {
     await runExceptions({
       inputs: ["1"],
       inputsToTerminate: INPUTS_TO_TERMINATE,
-      expectedErrorMessage: "[ERROR] 12월 14일 토요일은 등교하는 날이 아닙니다.",
+      expectedErrorMessage: "[ERROR] 12월 14일 토요일은 등교일이 아닙니다.",
     });
   });
 

@@ -1,4 +1,4 @@
-import { DateTimes } from "@woowacourse/mission-utils";
+import { Random, Console, DateTimes } from "@woowacourse/mission-utils";
 
 class Today {
   static findToday() {

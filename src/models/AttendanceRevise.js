@@ -1,4 +1,4 @@
-import { Random, Console } from "@woowacourse/mission-utils";
+import { Random, Console, DateTimes } from "@woowacourse/mission-utils";
 import DataLoader from "../utils/DataLoader.js";
 //이름,날짜,시간
 

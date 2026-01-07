@@ -1,4 +1,4 @@
-import { Random, Console } from "@woowacourse/mission-utils";
+import { Random, Console, DateTimes } from "@woowacourse/mission-utils";
 import DataLoader from "../utils/DataLoader.js";
 import Today from "../utils/Today.js";
 import TimeTable from "./TimeTable.js";
@@ -17,17 +17,30 @@ class AttendanceCheck {
   }
 
   static async get_user_information() {
-    const getToday = Today.findToday();
-    const todayDayInfo = Today.findToday();
-    const month = todayDayInfo[0];
-    const date = todayDayInfo[1];
-    const day = todayDayInfo[2];
-    const dayText = todayDayInfo[3];
-    const time = todayDayInfo[4];
+    const today = DateTimes.now();
 
-    if (getToday[3] === "토요일" || getToday[3] === "일요일") {
+    let month = today.getMonth() + 1;
+    let date = today.getDate();
+    let day = today.getDay();
+
+    let hours = today.getHours();
+    let minutes = today.getMinutes();
+    let time = `${hours}:${minutes}`;
+
+    const day_map = {
+      0: "일요일",
+      1: "월요일",
+      2: "화요일",
+      3: "수요일",
+      4: "목요일",
+      5: "금요일",
+      6: "토요일",
+    };
+    const daytext = day_map[day];
+
+    if (day === 6 || day === 0) {
       throw new Error(
-        `[ERROR] ${month}월 ${date}일 ${dayText}은 등교일이 아닙니다.`
+        `[ERROR] ${month}월 ${date}일 ${daytext}은 등교일이 아닙니다.`
       );
     }
     const pickname = this.getRecordUserList();

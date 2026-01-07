@@ -1,4 +1,4 @@
-import { Random, Console } from "@woowacourse/mission-utils";
+import { Random, Console, DateTimes } from "@woowacourse/mission-utils";
 import DataLoader from "./utils/DataLoader.js";
 import AttendanceCheck from "./models/AttendanceCheck.js";
 import AttendanceRecord from "./models/AttendanceRecord.js";
@@ -12,17 +12,17 @@ class App {
     let isRunning = true;
     while (true) {
       // 1. 오늘 날짜 출력 ex)`오늘은 ${month}월 ${date}일 ${day_map[day]}입니다. 기능을 선택해 주세요.`
-      const getToday = Today.findToday();
+      const today = Today.findToday();
 
       const category = await Console.readLineAsync(
-        `오늘은 ${getToday[0]}월 ${getToday[1]}일 ${getToday[3]}입니다. \n기능을 선택해 주세요.\n1. 출석 확인\n2. 출석 수정\n3. 크루별 출석 기록 확인\n4. 제적 위험자 확인\nQ. 종료\n`
+        `오늘은 ${today[0]}월 ${today[1]}일 ${today[2]}입니다. \n기능을 선택해 주세요.\n1. 출석 확인\n2. 출석 수정\n3. 크루별 출석 기록 확인\n4. 제적 위험자 확인\nQ. 종료\n`
       );
 
       if (["Q", "q"].includes(category)) {
         break;
       }
       this.checkCategory(category);
-      await this.selectCategoryFunction(category, getToday);
+      await this.selectCategoryFunction(category, today);
     }
   }
   checkCategory(category) {
@@ -33,7 +33,7 @@ class App {
     }
   }
 
-  async selectCategoryFunction(category, getToday) {
+  async selectCategoryFunction(category, today) {
     switch (category) {
       case "1":
         await AttendanceCheck.get_user_information();

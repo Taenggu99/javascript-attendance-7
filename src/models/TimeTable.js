@@ -7,16 +7,19 @@ import Today from "../utils/Today.js";
 class TimeTable {
   // 4. 교육시간 : 월요일은 13:00~18:00, 화요일-금요일은 10:00~18:00
   static checkTardiness() {
-    const todayDayInfo = DateTimes.now();
-    const month = todayDayInfo[0];
-    const date = todayDayInfo[1];
-    const day = todayDayInfo[2];
-    const dayText = todayDayInfo[3];
-    const time = todayDayInfo[4];
+    const today = DateTimes.now();
+
+    let month = today.getMonth() + 1;
+    let date = today.getDate();
+    let day = today.getDay();
+
+    let hours = today.getHours();
+    let minutes = today.getMinutes();
+    let time = `${hours}:${minutes}`;
 
     // 주말(토=6, 일=0)이거나 기준 시간이 설정되지 않은 경우
-    if (day === 0 || day === 6) {
-      console.log(`${month}월 ${date}일 ${dayText}은 등교일이 아닙니다`);
+    if (date === 0 || date === 6) {
+      return Console.print(`${month}월 ${date}일 ${day}은 등교일이 아닙니다`);
     } else {
       return [month, date, day, dayText, time];
     }

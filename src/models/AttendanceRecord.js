@@ -15,6 +15,17 @@ class AttendanceRecord {
 
     return userTimeRecord;
   }
+
+  static getRecordUserList() {
+    const data = DataLoader.loadAttendanceCsv("public/attendances.csv");
+    const usersFullRecord = Object.groupBy(data, ({ nickname }) => nickname);
+    const keys = Object.keys(usersFullRecord);
+    // 배열 순서대로 정렬
+    // usersFullRecord.sort();
+
+    return keys;
+  }
+
   static spliteTableOfUser(userTimeRecord) {
     const changeUserTimeRecord = [];
     const newTimeRecord = [];
@@ -31,16 +42,22 @@ class AttendanceRecord {
 
   static async getUser_AttendanceRecord_Information() {
     // const takeUserdata = this.splitTableOfUser();
+    const pickname = this.getRecordUserList();
 
     // Console.print(takeUserdata);
     const userName = await Console.readLineAsync("\n닉네임을 입력해 주세요\n");
+    // const userTimeRecord = this.splitTableOfUsers(userName);
+    if (!pickname.includes(userName)) {
+      throw new Error("[ERROR] 등록되지 않은 닉네임입니다.");
+    }
 
-    const userTimeRecord = this.splitTableOfUsers(userName);
     // Console.print(userTimeRecord);
     Console.print(`이번 달 ${userName}의 출석 기록입니다.`);
+    Console.print(userTimeRecord);
     // Console.print(userTimeRecord.length);
     const outputUserTime = this.spliteTableOfUser(userTimeRecord);
     Console.print(outputUserTime[0].join("\n"));
+    Console.print("");
     // const showResult = findFullday(year, date, time);
     // Console.print(showResult);
   }

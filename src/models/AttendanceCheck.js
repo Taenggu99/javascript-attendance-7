@@ -27,7 +27,7 @@ class AttendanceCheck {
 
     if (getToday[3] === "토요일" || getToday[3] === "일요일") {
       throw new Error(
-        `[ERROR] ${month}월  ${date}일  ${dayText}은 등교일이 아닙니다.`
+        `[ERROR] ${month}월 ${date}일 ${dayText}은 등교일이 아닙니다.`
       );
     }
     const pickname = this.getRecordUserList();
@@ -51,18 +51,19 @@ class AttendanceCheck {
     let 등교_시 = 등교시분[0];
     let 등교_분 = 등교시분[1];
 
-    if (Number.isNaN(등교_시)) {
-      throw new Error("[ERROR] 입력이 잘못되었습니다");
-    } else if (Number.isNaN(등교_분)) {
-      throw new Error("[ERROR] 입력이 잘못되었습니다");
+    if (Number.isNaN(등교_시) || 등교_시 > 23) {
+      throw new Error("[ERROR] 잘못된 형식을 입력하였습니다.");
+    } else if (Number.isNaN(등교_분) || 등교_분 > 60 || 등교_분 < 0) {
+      throw new Error("[ERROR] 잘못된 형식을 입력하였습니다.");
       // } else if (cleanedValue !== 등교시간.value) {
       //   throw new Error("[ERROR] 입력이 잘못되었습니다");
     }
     // Console.print(`${등교시간}  , ${등교_시} , ${등교_분}`);
     const 등하교결과 = TimeTable.checkingTime(등교_시, 등교_분);
     //3. 출석날짜 및 시간 출력 ex)12월 05일 화요일 09:59 (출석)
-    Console.print("여긴 등하교 결과 보여주는곳 바로위");
-    Console.print(`${month}월 ${date}일 ${dayText} (${등하교결과})`);
+    // Console.print("여긴 등하교 결과 보여주는곳 바로위");
+    Console.print(`${month}월 ${date}일 ${dayText} ${time}(${등하교결과})`);
+    // Console.print("여긴 등하교 결과 보여주는곳 바로아래");
   }
 
   // 1. 출석 관리 규칙 및 시스템 설계

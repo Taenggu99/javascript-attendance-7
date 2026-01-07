@@ -10,26 +10,23 @@ import Today from "./utils/Today.js";
 class App {
   async run() {
     let isRunning = true;
-    while (isRunning)
-      try {
-        // 1. 오늘 날짜 출력 ex)`오늘은 ${month}월 ${date}일 ${day_map[day]}입니다. 기능을 선택해 주세요.`
-        const getToday = Today.findToday();
+    while (true) {
+      // 1. 오늘 날짜 출력 ex)`오늘은 ${month}월 ${date}일 ${day_map[day]}입니다. 기능을 선택해 주세요.`
+      const getToday = Today.findToday();
 
-        const category = await Console.readLineAsync(
-          `오늘은 ${getToday[0]}월 ${getToday[1]}일 ${getToday[3]}입니다. \n기능을 선택해 주세요.\n1. 출석 확인\n2. 출석 수정\n3. 크루별 출석 기록 확인\n4. 제적 위험자 확인\nQ. 종료\n`
-        );
-        this.checkCategory(category);
-        if (category === "Q") {
-          isRunning = false;
-          continue;
-        }
-        await this.selectCategoryFunction(category, getToday);
-      } catch (error) {
-        Console.print(error.message);
+      const category = await Console.readLineAsync(
+        `오늘은 ${getToday[0]}월 ${getToday[1]}일 ${getToday[3]}입니다. \n기능을 선택해 주세요.\n1. 출석 확인\n2. 출석 수정\n3. 크루별 출석 기록 확인\n4. 제적 위험자 확인\nQ. 종료\n`
+      );
+
+      if (["Q", "q"].includes(category)) {
+        break;
       }
+      this.checkCategory(category);
+      await this.selectCategoryFunction(category, getToday);
+    }
   }
   checkCategory(category) {
-    const allowedCategories = ["1", "2", "3", "4", "Q"]; // 허용된 값 리스트
+    const allowedCategories = ["1", "2", "3", "4", "Q", "q"]; // 허용된 값 리스트
 
     if (!allowedCategories.includes(category)) {
       throw new Error("[ERROR] 잘못된 형식을 입력하였습니다.");
@@ -54,7 +51,6 @@ class App {
         WarningPeople;
         break;
       case "Q":
-        await TimeTable.checkingTime(getToday);
         break;
       // case "a":
       // await  DataLoader.dataTrimming();

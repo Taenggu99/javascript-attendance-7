@@ -1,11 +1,17 @@
+import { DateTimes } from "@woowacourse/mission-utils";
+
 class Today {
   static findToday() {
-    const today = new Date();
+    // const today = new Date();
+    const today = DateTimes.now();
 
-    let year = today.getFullYear(); //년도
     let month = today.getMonth() + 1;
     let date = today.getDate();
     let day = today.getDay();
+
+    let hours = today.getHours();
+    let minutes = today.getMinutes();
+    let time = `${hours}:${minutes}`;
 
     const day_map = {
       0: "일요일",
@@ -18,7 +24,7 @@ class Today {
     };
     const daytext = day_map[day];
 
-    return [month, date, daytext];
+    return [month, date, day, daytext, time];
   }
 }
 

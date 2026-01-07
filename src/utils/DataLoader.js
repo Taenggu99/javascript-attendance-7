@@ -6,7 +6,7 @@ class DataLoader {
   static loadAttendanceCsv(filePathName) {
     try {
       const filePath = path.join(process.cwd(), filePathName);
-      console.log("🔍 지금 찾고 있는 경로:", filePath);
+      // console.log("🔍 지금 찾고 있는 경로:", filePath);
       const fileContent = fs.readFileSync(filePath, "utf-8");
       return fileContent
         .split("\n")
@@ -21,4 +21,5 @@ class DataLoader {
     }
   }
 }
+
 export default DataLoader;

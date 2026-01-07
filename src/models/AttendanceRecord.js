@@ -10,18 +10,23 @@ class AttendanceRecord {
     const userTimeRecord = userFullRecord.map(
       (UserRecord) => UserRecord.datetime
     );
+    // 배열 순서대로 정렬
+    userTimeRecord.sort();
 
     return userTimeRecord;
   }
-
   static spliteTableOfUser(userTimeRecord) {
     const changeUserTimeRecord = [];
+    const newTimeRecord = [];
+
     for (let i = 0; i < userTimeRecord.length; i++) {
       const [fullDate, time] = userTimeRecord[i].split(" ");
       const [year, month, date] = fullDate.split("-");
+      newTimeRecord.push([year, month, date, time]);
       changeUserTimeRecord.push(`${month}월 ${date}일 000일 ${time}`);
     }
-    return changeUserTimeRecord;
+
+    return [changeUserTimeRecord, newTimeRecord];
   }
 
   static async getUser_AttendanceRecord_Information() {
@@ -31,10 +36,11 @@ class AttendanceRecord {
     const userName = await Console.readLineAsync("\n닉네임을 입력해 주세요\n");
 
     const userTimeRecord = this.splitTableOfUsers(userName);
+    // Console.print(userTimeRecord);
     Console.print(`이번 달 ${userName}의 출석 기록입니다.`);
-    Console.print(userTimeRecord.length);
+    // Console.print(userTimeRecord.length);
     const outputUserTime = this.spliteTableOfUser(userTimeRecord);
-    Console.print(outputUserTime);
+    Console.print(outputUserTime[0].join("\n"));
     // const showResult = findFullday(year, date, time);
     // Console.print(showResult);
   }

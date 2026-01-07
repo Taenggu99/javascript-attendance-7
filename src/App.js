@@ -1,6 +1,10 @@
 import { Random, Console } from "@woowacourse/mission-utils";
 import DataLoader from "./utils/DataLoader.js";
 import AttendanceCheck from "./models/AttendanceCheck.js";
+import AttendanceRecord from "./models/AttendanceRecord.js";
+import AttendanceRevise from "./models/AttendanceRevise.js";
+// import WarningPeople from "./models/WarningPeople.js";
+
 import Today from "./utils/Today.js";
 class App {
   async run() {
@@ -23,7 +27,7 @@ class App {
           break;
 
         case "3":
-          AttendanceRecord;
+          AttendanceRecord.attendanceCheck();
 
           break;
 

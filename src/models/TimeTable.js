@@ -1,6 +1,5 @@
-import { Random, Console, DateTimes } from "@woowacourse/mission-utils";
-import moduleName from "module";
-import Today from "../utils/Today.js";
+import { Console, DateTimes } from "@woowacourse/mission-utils";
+// import Today from "../utils/Today.js";
 
 //이름,날짜,시간
 
@@ -13,45 +12,55 @@ class TimeTable {
     let date = today.getDate();
     let day = today.getDay();
 
-    let hours = today.getHours();
-    let minutes = today.getMinutes();
-    let time = `${hours}:${minutes}`;
+    // let realhours = today.getHours();
+    // let realminutes = today.getMinutes();
+    // let time = `${realhours}:${realminutes}`;
+
+    const day_map = {
+      0: "일요일",
+      1: "월요일",
+      2: "화요일",
+      3: "수요일",
+      4: "목요일",
+      5: "금요일",
+      6: "토요일",
+    };
+    const daytext = day_map[day];
 
     // 주말(토=6, 일=0)이거나 기준 시간이 설정되지 않은 경우
     if (date === 0 || date === 6) {
-      return Console.print(`${month}월 ${date}일 ${day}은 등교일이 아닙니다`);
+      return Console.print(
+        `${month}월 ${date}일 ${daytext}은 등교일이 아닙니다`
+      );
     } else {
-      return [month, date, day, dayText, time];
+      return [month, date, day, daytext];
     }
   }
 
   // 함수 실행
   // checkTardiness();
 
-  static educationTime() {
-    // const educationTimeTable = [[13:00,18:00]];
-    // const educationTimeTable = {
-    //   1: {
-    //     open: "13:00",
-    //     close: "18:00",
-    //   },
-    //   2: {
-    //     open: "10:00",
-    //     close: "18:00"},
-    //   3: {
-    //     open: "10:00",
-    //     close: "18:00"},
-    //   4: {
-    //     open: "10:00",
-    //     close: "18:00"},
-    //   5: {
-    //     open: "10:00",
-    //     close: "18:00"}
-    // }
-  }
-  static checkingTime(등교_시, 등교_분) {
-    const [month, date, day, dayText, time] = this.checkTardiness();
+  static checkingTime(day_, 등교_시, 등교_분) {
+    // const getTimeinfo = this.checkTardiness();
+    console.log(
+      " 이건 타임테이블로 넘어오고나서의 날짜, 등교시, 등교분 부분 ->",
+      day_,
+      등교_시,
+      등교_분
+    );
     let 등교결과값 = [];
+    // const daydata = getTimeinfo[2];
+    const hour = 등교_시;
+    const minute = 등교_분;
+
+    console.log(
+      " 등교시, 등교분, hour, min ->",
+
+      등교_시,
+      등교_분,
+      hour,
+      minute
+    );
     // const 등교시분 = 등교시간.split(":").map(Number);
 
     // Console.print("등교시" + 등교_시 + "등교분 " + 등교_분);
@@ -64,36 +73,34 @@ class TimeTable {
     //운영 시간은 매일 08:00~23:00이다.
     const 운영시간시작 = ["08", "00"];
     const 운영시간종료 = ["23", "00"];
-    console.log(" 여기는 캠퍼스 운영시간 출석 에러 나오기전");
-    if (등교_시 < 8 || 등교_시 > 23 || (등교_시 === 23 && 등교_분 > 0)) {
+    console.log(
+      " 여기는 캠퍼스 운영시간 출석 에러 나오기전     이건받아온시간 ->",
+      hour,
+      minute
+    );
+
+    if (등교_시 < 8 || 등교_시 > 23 || (등교_시 == 23 && 등교_분 > 0)) {
       throw new Error("[ERROR] 캠퍼스 운영 시간에만 출석이 가능합니다.");
-    }
-
-    const 월요일출석시간시작 = ["13", "00"];
-    const 월요일출석시간종료 = ["18", "00"];
-    const 평일출석가능시간시작 = ["10", "00"];
-    // const 평일출석가능시간종료=["23","00"]
-
-    if (day === 1) {
-      if (Number(등교_시) > 13) {
-        등교결과값.push("결석");
-      } else if (Number(등교_시) === 13 && Number(등교_분) <= 5) {
-        등교결과값.push("출석");
-      } else {
-        등교결과값.push("지각");
-      }
     } else {
-      if (Number(등교_시) > 10) {
-        등교결과값.push("결석");
-      } else if (Number(등교_시) === 10 && Number(등교_분) > 30) {
-        등교결과값.push("결석");
-      } else if (Number(등교_시) === 10 && Number(등교_분) <= 5) {
-        등교결과값.push("출석");
+      if (day_ === 1) {
+        if (등교_시 > 13 || (등교_시 <= 13 && 등교_분 > 30)) {
+          등교결과값.push("결석");
+        } else if (등교_시 === 13 && minute > 5) {
+          등교결과값.push("지각");
+          등교_분;
+        } else {
+          등교결과값.push("출석");
+        }
       } else {
-        등교결과값.push("지각");
+        if (등교_시 > 10 || (등교_시 >= 10 && 등교_분 > 30)) {
+          등교결과값.push("결석");
+        } else if (등교_시 === 10 && 등교_분 > 5) {
+          등교결과값.push("지각");
+        } else {
+          등교결과값.push("출석");
+        }
       }
     }
-
     return 등교결과값;
   }
 

@@ -1,5 +1,6 @@
 import { Random, Console, DateTimes } from "@woowacourse/mission-utils";
 import DataLoader from "../utils/DataLoader.js";
+import TimeTable from "./TimeTable.js";
 //이름,날짜,시간
 
 class AttendanceRecord {
@@ -27,18 +28,77 @@ class AttendanceRecord {
   }
 
   static spliteTableOfUser(userTimeRecord) {
-    const changeUserTimeRecord = [];
-    const newTimeRecord = [];
+    let changeUserTimeRecord = [];
+    let newTimeRecord = [2024, 12];
+    const today = DateTimes.now();
 
+    let month = today.getMonth() + 1;
+    let date = today.getDate();
+    let day = today.getDay();
+
+    let hours = today.getHours();
+    let minutes = today.getMinutes();
+    let time = `${hours}:${minutes}`;
+
+    const day_map = {
+      0: "일요일",
+      1: "월요일",
+      2: "화요일",
+      3: "수요일",
+      4: "목요일",
+      5: "금요일",
+      6: "토요일",
+    };
+
+    // const userTimeRecord = splitTableOfUsers(userName);
     for (let i = 0; i < userTimeRecord.length; i++) {
       const [fullDate, time] = userTimeRecord[i].split(" ");
+
+      const 등교시분 = time.split(":");
+      let 등교_시 = 등교시분[0];
+      let 등교_분 = 등교시분[1];
+
       const [year, month, date] = fullDate.split("-");
       newTimeRecord.push([year, month, date, time]);
-      changeUserTimeRecord.push(`${month}월 ${date}일 000일 ${time}`);
-    }
+      const day = (date - 1) % 6;
 
+      console.log(" 등하교 결과 추출 상단 --------------------------------");
+      // Console.print(`${등교시간}  , ${등교_시} , ${등교_분}`);
+      console.log(등교_시, 등교_분);
+      console.log(" day : ", day);
+      const 등하교결과 = TimeTable.checkingTime(day, 등교_시, 등교_분);
+      console.log(등하교결과);
+      console.log(" 등하교 결과 추출 하단 --------------------------------");
+
+      const day_map = {
+        0: "일요일",
+        1: "월요일",
+        2: "화요일",
+        3: "수요일",
+        4: "목요일",
+        5: "금요일",
+        6: "토요일",
+      };
+      const daytext = day_map[day];
+      if (등하교결과 == "결석") {
+        changeUserTimeRecord.push(
+          `${month}월 ${date}일 ${daytext} --:-- (${등하교결과})`
+        );
+      } else {
+        changeUserTimeRecord.push(
+          `${month}월 ${date}일 ${daytext} ${time} (${등하교결과})`
+        );
+      }
+
+      console.log(
+        "---------------이거봐봐-----------------\n",
+        changeUserTimeRecord
+      );
+    }
     return [changeUserTimeRecord, newTimeRecord];
   }
+
+  static async get_full_cal() {}
 
   static async getUser_AttendanceRecord_Information() {
     // const takeUserdata = this.splitTableOfUser();
@@ -46,16 +106,20 @@ class AttendanceRecord {
 
     // Console.print(takeUserdata);
     const userName = await Console.readLineAsync("\n닉네임을 입력해 주세요\n");
-    // const userTimeRecord = this.splitTableOfUsers(userName);
+    const userTimeRecord = this.splitTableOfUsers(userName);
     if (!pickname.includes(userName)) {
       throw new Error("[ERROR] 등록되지 않은 닉네임입니다.");
     }
 
     // Console.print(userTimeRecord);
     Console.print(`이번 달 ${userName}의 출석 기록입니다.`);
-    Console.print(userTimeRecord);
+    // Console.print(userTimeRecord);
     // Console.print(userTimeRecord.length);
     const outputUserTime = this.spliteTableOfUser(userTimeRecord);
+    console.log("이거시발왜안돼", outputUserTime);
+    {
+    }
+
     Console.print(outputUserTime[0].join("\n"));
     Console.print("");
     // const showResult = findFullday(year, date, time);

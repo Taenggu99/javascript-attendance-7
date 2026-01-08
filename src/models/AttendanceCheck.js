@@ -1,6 +1,5 @@
 import { Random, Console, DateTimes } from "@woowacourse/mission-utils";
 import DataLoader from "../utils/DataLoader.js";
-import Today from "../utils/Today.js";
 import TimeTable from "./TimeTable.js";
 
 //이름,날짜,시간
@@ -25,7 +24,7 @@ class AttendanceCheck {
 
     let hours = today.getHours();
     let minutes = today.getMinutes();
-    let time = `${hours}:${minutes}`;
+    // let time = `${hours}:${minutes}`;
 
     const day_map = {
       0: "일요일",
@@ -58,11 +57,21 @@ class AttendanceCheck {
     const 등교시간 = await Console.readLineAsync(
       "\n등교 시간을 입력해 주세요\n"
     );
-    // const cleanedValue = 등교시간.value.replace(/[^0-9:]/g, "");
+    console.log(
+      " 이건 등교시간 입력 아래부분      이건 등교시간 받아오는거 출력부분 등교시간  ->",
+      등교시간
+    );
 
+    // const cleanedValue = 등교시간.value.replace(/[^0-9:]/g, "");
     const 등교시분 = 등교시간.split(":");
     let 등교_시 = 등교시분[0];
     let 등교_분 = 등교시분[1];
+    console.log(
+      "  이건 등교시간 받아오는거 출력부분  ->",
+      등교시분,
+      등교_시,
+      등교_분
+    );
 
     if (Number.isNaN(등교_시) || 등교_시 > 23) {
       throw new Error("[ERROR] 잘못된 형식을 입력하였습니다.");
@@ -71,11 +80,14 @@ class AttendanceCheck {
       // } else if (cleanedValue !== 등교시간.value) {
       //   throw new Error("[ERROR] 입력이 잘못되었습니다");
     }
+
     // Console.print(`${등교시간}  , ${등교_시} , ${등교_분}`);
-    const 등하교결과 = TimeTable.checkingTime(등교_시, 등교_분);
+    const 등하교결과 = TimeTable.checkingTime(0, 등교_시, 등교_분);
     //3. 출석날짜 및 시간 출력 ex)12월 05일 화요일 09:59 (출석)
     // Console.print("여긴 등하교 결과 보여주는곳 바로위");
-    Console.print(`${month}월 ${date}일 ${dayText} ${time}(${등하교결과})`);
+    Console.print(
+      `${month}월 ${date}일 ${daytext} ${등교_시}:${등교_분} (${등하교결과})`
+    );
     // Console.print("여긴 등하교 결과 보여주는곳 바로아래");
   }
 

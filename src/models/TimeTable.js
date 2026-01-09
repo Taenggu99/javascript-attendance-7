@@ -42,25 +42,25 @@ class TimeTable {
 
   static checkingTime(day_, 등교_시, 등교_분) {
     // const getTimeinfo = this.checkTardiness();
-    console.log(
-      " 이건 타임테이블로 넘어오고나서의 날짜, 등교시, 등교분 부분 ->",
-      day_,
-      등교_시,
-      등교_분
-    );
+    // console.log(
+    //   " 이건 타임테이블로 넘어오고나서의 날짜, 등교시, 등교분 부분 ->",
+    //   day_,
+    //   등교_시,
+    //   등교_분
+    // );
     let 등교결과값 = [];
     // const daydata = getTimeinfo[2];
     const hour = 등교_시;
     const minute = 등교_분;
 
-    console.log(
-      " 등교시, 등교분, hour, min ->",
+    // console.log(
+    //   " 등교시, 등교분, hour, min ->",
 
-      등교_시,
-      등교_분,
-      hour,
-      minute
-    );
+    //   등교_시,
+    //   등교_분,
+    //   hour,
+    //   minute
+    // );
     // const 등교시분 = 등교시간.split(":").map(Number);
 
     // Console.print("등교시" + 등교_시 + "등교분 " + 등교_분);
@@ -73,11 +73,11 @@ class TimeTable {
     //운영 시간은 매일 08:00~23:00이다.
     const 운영시간시작 = ["08", "00"];
     const 운영시간종료 = ["23", "00"];
-    console.log(
-      " 여기는 캠퍼스 운영시간 출석 에러 나오기전     이건받아온시간 ->",
-      hour,
-      minute
-    );
+    // console.log(
+    //   " 여기는 캠퍼스 운영시간 출석 에러 나오기전     이건받아온시간 ->",
+    //   hour,
+    //   minute
+    // );
 
     if (등교_시 < 8 || 등교_시 > 23 || (등교_시 == 23 && 등교_분 > 0)) {
       throw new Error("[ERROR] 캠퍼스 운영 시간에만 출석이 가능합니다.");

@@ -5,6 +5,7 @@ import AttendanceRecord from "./models/AttendanceRecord.js";
 import AttendanceRevise from "./models/AttendanceRevise.js";
 import TimeTable from "./models/TimeTable.js";
 import Today from "./utils/Today.js";
+import WarningPeople from "./models/warningPeople.js";
 // import WarningPeople from "./models/WarningPeople.js";
 
 class App {
@@ -15,7 +16,7 @@ class App {
       const today = Today.findToday();
 
       const category = await Console.readLineAsync(
-        `오늘은 ${today[0]}월 ${today[1]}일 ${today[2]}입니다. \n기능을 선택해 주세요.\n1. 출석 확인\n2. 출석 수정\n3. 크루별 출석 기록 확인\n4. 제적 위험자 확인\nQ. 종료\n`
+        `오늘은 ${today[0]}월 ${today[1]}일 ${today[3]}입니다. \n기능을 선택해 주세요.\n1. 출석 확인\n2. 출석 수정\n3. 크루별 출석 기록 확인\n4. 제적 위험자 확인\nQ. 종료\n`
       );
 
       if (["Q", "q"].includes(category)) {
@@ -33,13 +34,13 @@ class App {
     }
   }
 
-  async selectCategoryFunction(category, today) {
+  async selectCategoryFunction(category) {
     switch (category) {
       case "1":
         await AttendanceCheck.get_user_information();
         break;
       case "2":
-        await AttendanceRevise();
+        await AttendanceRevise.Fix_AttendanceInfo();
         break;
 
       case "3":
@@ -48,7 +49,7 @@ class App {
         break;
 
       case "4":
-        WarningPeople;
+        WarningPeople.warnning_AttendanceInfo();
         break;
       case "Q":
         break;

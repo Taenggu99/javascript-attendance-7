@@ -57,21 +57,21 @@ class AttendanceCheck {
     const 등교시간 = await Console.readLineAsync(
       "\n등교 시간을 입력해 주세요\n"
     );
-    console.log(
-      " 이건 등교시간 입력 아래부분      이건 등교시간 받아오는거 출력부분 등교시간  ->",
-      등교시간
-    );
+    // console.log(
+    //   " 이건 등교시간 입력 아래부분      이건 등교시간 받아오는거 출력부분 등교시간  ->",
+    //   등교시간
+    // );
 
     // const cleanedValue = 등교시간.value.replace(/[^0-9:]/g, "");
     const 등교시분 = 등교시간.split(":");
     let 등교_시 = 등교시분[0];
-    let 등교_분 = 등교시분[1];
-    console.log(
-      "  이건 등교시간 받아오는거 출력부분  ->",
-      등교시분,
-      등교_시,
-      등교_분
-    );
+    // let 등교_분 = 등교시분[1];
+    // console.log(
+    //   "  이건 등교시간 받아오는거 출력부분  ->",
+    //   등교시분,
+    //   등교_시,
+    //   등교_분
+    // );
 
     if (Number.isNaN(등교_시) || 등교_시 > 23) {
       throw new Error("[ERROR] 잘못된 형식을 입력하였습니다.");

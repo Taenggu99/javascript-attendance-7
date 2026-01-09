@@ -62,13 +62,13 @@ class AttendanceRecord {
       newTimeRecord.push([year, month, date, time]);
       const day = (date - 1) % 6;
 
-      console.log(" 등하교 결과 추출 상단 --------------------------------");
+      // console.log(" 등하교 결과 추출 상단 --------------------------------");
       // Console.print(`${등교시간}  , ${등교_시} , ${등교_분}`);
-      console.log(등교_시, 등교_분);
-      console.log(" day : ", day);
+      // console.log(등교_시, 등교_분);
+      // console.log(" day : ", day);
       const 등하교결과 = TimeTable.checkingTime(day, 등교_시, 등교_분);
-      console.log(등하교결과);
-      console.log(" 등하교 결과 추출 하단 --------------------------------");
+      // console.log(등하교결과);
+      // console.log(" 등하교 결과 추출 하단 --------------------------------");
 
       const day_map = {
         0: "일요일",
@@ -90,10 +90,10 @@ class AttendanceRecord {
         );
       }
 
-      console.log(
-        "---------------이거봐봐-----------------\n",
-        changeUserTimeRecord
-      );
+      // console.log(
+      //   "---------------이거봐봐-----------------\n",
+      //   changeUserTimeRecord
+      // );
     }
     return [changeUserTimeRecord, newTimeRecord];
   }
@@ -116,9 +116,7 @@ class AttendanceRecord {
     // Console.print(userTimeRecord);
     // Console.print(userTimeRecord.length);
     const outputUserTime = this.spliteTableOfUser(userTimeRecord);
-    console.log("이거시발왜안돼", outputUserTime);
-    {
-    }
+    // console.log("이거시발왜안돼", outputUserTime);
 
     Console.print(outputUserTime[0].join("\n"));
     Console.print("");
